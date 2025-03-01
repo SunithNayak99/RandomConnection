@@ -1,0 +1,223 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Stranger Chat</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark">
+<div class="chat-container">
+    <div class="video-wrapper">
+        <div class="video-box">
+            <video id="localVideo" autoplay muted playsinline></video>
+            <span class="label">You</span>
+        </div>
+        <div class="video-box">
+            <video id="remoteVideo" autoplay playsinline></video>
+            <div id="searching">🔎 Searching for Stranger...</div>
+            <span class="label">Stranger</span>
+        </div>
+    </div>
+
+    <div class="chat-area">
+        <div id="messages"></div>
+        <input type="text" id="message" placeholder="Type a message">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <div class="controls">
+        <button onclick="toggleVideo()">📹 Video On/Off</button>
+        <button onclick="skip()">⏭️ Skip</button>
+    </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="script.js"></script>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Stranger Chat</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1e1f22, #313338);
+            font-family: 'Poppins', Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: white;
+        }
+
+        .chat-container {
+            background: rgba(32, 34, 37, 0.95);
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            width: 90%;
+            max-width: 700px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .video-wrapper {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .video-box {
+            flex: 1;
+            height: 200px;
+            background: black;
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+        }
+
+        .label {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 5px 10px;
+            font-size: 12px;
+            border-radius: 20px;
+        }
+
+        #searching {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 16px;
+            color: #ff8a00;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .chat-area {
+            background: #232428;
+            padding: 10px;
+            height: 120px;
+            overflow-y: auto;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        #messages {
+            flex: 1;
+            text-align: left;
+            overflow-y: auto;
+            font-size: 14px;
+        }
+
+        input#message {
+            width: calc(100% - 80px);
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            outline: none;
+            background: #1e1f22;
+            color: white;
+        }
+
+        .chat-area button {
+            background: linear-gradient(135deg, #00f260, #0575e6);
+            border: none;
+            padding: 10px 15px;
+            color: white;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .chat-area button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 242, 96, 0.4);
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .controls button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            color: white;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .controls button:nth-child(1) {
+            background: linear-gradient(135deg, #ff8a00, #ff0055);
+        }
+
+        .controls button:nth-child(2) {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+        }
+
+        .controls button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(255, 255, 255, 0.3);
+        }
+
+        .controls button:active {
+            transform: translateY(1px);
+            box-shadow: none;
+        }
+    </style>
+</head>
+<body>
+<div class="chat-container">
+    <div class="video-wrapper">
+        <div class="video-box">
+            <video id="localVideo" autoplay muted playsinline></video>
+            <span class="label">You</span>
+        </div>
+        <div class="video-box">
+            <video id="remoteVideo" autoplay playsinline></video>
+            <div id="searching">🔎 Searching for Stranger...</div>
+            <span class="label">Stranger</span>
+        </div>
+    </div>
+
+    <div class="chat-area">
+        <div id="messages"></div>
+        <div style="display: flex; gap: 5px;">
+            <input type="text" id="message" placeholder="Type a message">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button onclick="toggleVideo()">📹 Video On/Off</button>
+        <button onclick="skip()">⏭️ Skip</button>
+    </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

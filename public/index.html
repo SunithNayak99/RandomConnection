@@ -1,0 +1,175 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Welcome to Stranger Chat</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark">
+<div class="form-container">
+    <h1>Welcome to Stranger Chat</h1>
+    <input type="text" id="username" placeholder="Enter your name">
+    
+    <div class="checkboxes">
+        <label><input type="checkbox" id="ageCheck"> I am 18+</label>
+        <label><input type="checkbox" id="privacyCheck"> I accept the Privacy Policy</label>
+    </div>
+
+    <button onclick="startChat()">Start Chat</button>
+</div>
+
+<script>
+function startChat() {
+    const name = document.getElementById('username').value.trim();
+    if (!name || !ageCheck.checked || !privacyCheck.checked) {
+        alert('Please fill all fields & agree to terms.');
+        return;
+    }
+    localStorage.setItem('username', name);
+    window.location.href = 'chat.html';
+}
+</script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Welcome to Stranger Chat</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1e1f22, #313338);
+            font-family: 'Poppins', Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: white;
+        }
+
+        .form-container {
+            background: rgba(32,34,37,0.95);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            width: 90%;
+            max-width: 500px;
+            animation: slideIn 0.7s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            background: linear-gradient(to right, #ff8a00, #ff0055);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 90%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 8px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        input::placeholder {
+            color: #bbb;
+        }
+
+        .checkboxes {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .checkboxes label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        input[type="checkbox"] {
+            accent-color: #ff8a00;
+            transform: scale(1.2);
+            cursor: pointer;
+        }
+
+        a {
+            color: #ff8a00;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        button {
+            background: linear-gradient(135deg, #ff8a00, #ff0055);
+            border: none;
+            padding: 12px 20px;
+            color: white;
+            font-size: 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(255, 138, 0, 0.4);
+        }
+
+        button:active {
+            transform: translateY(1px);
+            box-shadow: none;
+        }
+    </style>
+</head>
+<body>
+<div class="form-container">
+    <h1>Welcome to Stranger Chat</h1>
+    <input type="text" id="username" placeholder="Enter your name">
+
+    <div class="checkboxes">
+        <label><input type="checkbox" id="ageCheck"> I am 18+</label>
+        <label><input type="checkbox" id="privacyCheck"> I accept the <a href="#">Privacy Policy</a></label>
+    </div>
+
+    <button onclick="startChat()">✨ Start Chat</button>
+</div>
+
+<script>
+function startChat() {
+    const name = document.getElementById('username').value.trim();
+    if (!name || !document.getElementById('ageCheck').checked || !document.getElementById('privacyCheck').checked) {
+        alert('Please enter your name and accept both conditions.');
+        return;
+    }
+    localStorage.setItem('username', name);
+    window.location.href = 'chat.html';
+}
+</script>
+</body>
+</html>
